@@ -68,7 +68,7 @@ hold on;
 end;
 
 grid
-axis([0 100 trueMean-1 trueMean+1])
+axis([0 100 trueMean-0.5 trueMean+0.5])
 xlabel('Experiments')
 ylabel('Confidence Interval')
 set(gca, 'XTick', outIdx)
