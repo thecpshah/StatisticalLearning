@@ -64,4 +64,5 @@ p2 = ggplot(confInterval, aes(x = idx, y = trueMean)) +
   geom_point(size = 1) +
   geom_errorbar(aes(ymax = upper, ymin = lower)) +
   xlab("Experiment") + ylab("Confidence Interval") + 
-  xlim(0, 100) + ylim(trueMean - 0.5, trueMean + 0.5)
+  scale_x_continuous(limits = c(0, 99), breaks = outIdx)
+  #xlim(0, 100) + ylim(trueMean - 0.5, trueMean + 0.5)

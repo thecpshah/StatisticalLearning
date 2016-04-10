@@ -62,13 +62,13 @@ plot(cIndex(tempIdx), confInterval(tempIdx, 1), '^', 'markersize', 10)          
 plot(cIndex(tempIdx), confInterval(tempIdx, 2), 'v', 'markersize', 10)              % plot upper CI boundary
 hold on;
 
-for I = 1:100/2                                                                       % connect first 100 upper and lower bound with a line
+for I = 1:100                                                                       % connect first 100 upper and lower bound with a line
 line([I I],[confInterval(I, 1) confInterval(I, 2)])
 hold on;
 end;
 
 grid
-axis([0 100/2 trueMean-1 trueMean+1])
+axis([0 100 trueMean-1 trueMean+1])
 xlabel('Experiments')
 ylabel('Confidence Interval')
 set(gca, 'XTick', outIdx)
