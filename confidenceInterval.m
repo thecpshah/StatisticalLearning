@@ -2,41 +2,43 @@ clear all
 clc
 close all
 
-N = 1e5;
+N = 1e5;                                            % Population size
 
-trueMean = 5;
+trueMean = 5;                                       % True mean of the population
 
-noise = randn(1,N);
+noise = randn(1,N);                                 % Gaussian noise, with zero mean, unit variance
 
-population = trueMean + noise;
-populationMean = mean(population);
-populationStd = std(population);
+population = trueMean + noise;                      % Population data
+populationMean = mean(population);                  % Population mean (should be equal to trueMean)
+populationStd = std(population);                    % Population standard deviation
 
-n = 100;
+n = 100;                                            % Sample size
 
-scale = 1.959964;
+scale = 1.959964;                                   % Scale factor for 95% confidence interval
 
-confInterval = zeros(100, 2);
+runs = 1e4;                                         % Number of experiments
 
-count = 0;
+confInterval = zeros(100, 2);                       
 
-runs = 1e4;
+count = 0;                                         
 
 outIdx = [];
 
 for kk = 1:runs
     
-    idx = randi([1 N], 1, n);
+    idx = randi([1 N], 1, n);                       % Generate random samples
+        
+    sample = population(idx);                       % Obtain random samples from Population
+    sampleMean = mean(sample);                      % sample mean
+    sampleStd = std(sample);                        % Sample standard deviation
     
-    sample = population(idx);
-    sampleMean = mean(sample);
-    sampleStd = std(sample);
+    marginError = scale * sampleStd/sqrt(n);        % Margin of Error
     
-    marginError = scale * sampleStd/sqrt(n);
-    
+    % Confidence Interval
     confInterval(kk, :) = [sampleMean-marginError sampleMean+marginError];
     
-    if (confInterval(kk,1) < populationMean && confInterval(kk,2) > populationMean)
+    % Check if the CI contains trueMean
+    if (confInterval(kk,1) < trueMean && confInterval(kk,2) > trueMean)
         count = count + 1;
     else
         outIdx = [outIdx kk];
@@ -44,6 +46,7 @@ for kk = 1:runs
     
 end
 
+% Final probability
 probability = count/runs*100;
 
 sprintf('The probability that the sample mean falls between an error margin is %0.2f%%', probability)
