@@ -2,7 +2,7 @@ clear all
 clc
 close all
 
-N = 10e6;
+N = 1e5;
 
 trueMean = 5;
 
@@ -20,7 +20,7 @@ confInterval = zeros(100, 2);
 
 count = 0;
 
-runs = 1e2;
+runs = 1e4;
 
 outIdx = [];
 
@@ -55,21 +55,21 @@ tempIdx = ismember(cIndex, outIdx);
 figure
 plot(cIndex, ones(1,length(cIndex))*trueMean, 'k-', 'markersize', 5)                % plot the mean
 hold on;
-plot(cIndex(~tempIdx), confInterval(~tempIdx, 1), '^', 'markersize', 10)            % plot lower CI boundary
-plot(cIndex(~tempIdx), confInterval(~tempIdx, 2), 'v', 'markersize', 10)            % plot upper CI boundary
+plot(cIndex(~tempIdx), confInterval(~tempIdx, 1), '^', 'markersize', 5)             % plot lower CI boundary
+plot(cIndex(~tempIdx), confInterval(~tempIdx, 2), 'v', 'markersize', 5)             % plot upper CI boundary
 hold on;
 plot(cIndex(tempIdx), confInterval(tempIdx, 1), '^', 'markersize', 10)              % plot lower CI boundary
 plot(cIndex(tempIdx), confInterval(tempIdx, 2), 'v', 'markersize', 10)              % plot upper CI boundary
 hold on;
 
-for I = cIndex                                        % connect upper and lower bound with a line
+for I = 1:100/2                                                                       % connect first 100 upper and lower bound with a line
 line([I I],[confInterval(I, 1) confInterval(I, 2)])
 hold on;
 end;
 
 grid
-axis([0 60 trueMean-1 trueMean+1])
+axis([0 100/2 trueMean-1 trueMean+1])
 xlabel('Experiments')
-ylabel('Confidence Interval Pair')
+ylabel('Confidence Interval')
 set(gca, 'XTick', outIdx)
 
